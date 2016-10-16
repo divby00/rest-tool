@@ -22,7 +22,7 @@ class ArgumentParser(object):
         parser = argparse.ArgumentParser(description='Small utility for calling some rest services and saving the result.')
         parser.add_argument('params', type=str, action='store', help='List of comma separated parameters.')
         args = parser.parse_args()
-        self.params = [p.strip() for p in args.params.split(';')]
+        self.params = [p.strip() for p in args.params.split(',')]
 
 
 class RestRequest(object):
