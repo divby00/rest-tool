@@ -96,7 +96,7 @@ def main():
     request_manager = RequestManager()
 
     for param in parser.params:
-        url = 'Add your URL here' + param
+        url = 'Put your URL here' + param
         filename = ''.join(['document-', param, '.json'])
         request_manager.requests = RestRequest(url, filename)
 
