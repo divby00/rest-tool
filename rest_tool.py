@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import requests
+import json
 
 
 class ArgumentParser(object):
@@ -21,7 +22,7 @@ class ArgumentParser(object):
         parser = argparse.ArgumentParser(description='Small utility for calling some rest services and saving the result.')
         parser.add_argument('params', type=str, action='store', help='List of comma separated parameters.')
         args = parser.parse_args()
-        self.params = [p.strip() for p in args.params.split(',')]
+        self.params = [p.strip() for p in args.params.split(';')]
 
 
 class RestRequest(object):
@@ -84,7 +85,8 @@ class FileSaver(object):
         try:
             for r in self._result:
                 with open(r.filename, 'w') as f:
-                    f.write(r.request.text)
+                    parsed_json = json.loads(r.request.text)
+                    f.write(json.dumps(parsed_json, indent=4, sort_keys=False))
         except Exception, e:
             print(e)
 
@@ -94,7 +96,7 @@ def main():
     request_manager = RequestManager()
 
     for param in parser.params:
-        url = 'Put your URL here' + param
+        url = 'Add your URL here' + param
         filename = ''.join(['document-', param, '.json'])
         request_manager.requests = RestRequest(url, filename)
 
